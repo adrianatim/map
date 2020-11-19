@@ -1,0 +1,52 @@
+package domain.adt;
+
+import exceptions.MyException;
+
+import java.util.Hashtable;
+import java.util.Map;
+
+public class MyDictionary<TKey, TValue> implements MyInterfaceDictionary<TKey, TValue> {
+
+    private final Hashtable<TKey, TValue> dictionary;
+
+    public MyDictionary() {
+        this.dictionary = new Hashtable<TKey, TValue>();
+    }
+
+    @Override
+    public void put(TKey k, TValue val) {
+        this.dictionary.put(k, val);
+    }
+
+    @Override
+    public void remove(TKey k) {
+        this.dictionary.remove(k);
+    }
+
+    @Override
+    public TValue lookup(TKey t) throws MyException {
+        if (this.dictionary.get(t) != null)
+            return this.dictionary.get(t);
+        else throw new MyException("Doesn't exist!");
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (Map.Entry<TKey, TValue> h : this.dictionary.entrySet()) {
+            s += "Key: " + h.getKey() + ", Value:" + h.getValue().toString() + "\n";
+        }
+        return s;
+    }
+
+    @Override
+    public boolean isDefined(TKey t) {
+        return this.dictionary.containsKey(t);
+    }
+
+    @Override
+    public void update(TKey t, TValue v) {
+        this.dictionary.put(t, v);
+    }
+
+}
